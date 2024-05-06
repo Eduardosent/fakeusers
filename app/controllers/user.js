@@ -5,9 +5,13 @@ const options = {
 }
 
 export async function getUsers(req,res){
-    await userModel.paginate({},options)
+    res.send({data:{
+        "user1":"user1",
+        "user2":"user2",
+    }})
+    /*await userModel.paginate({},options)
     .then((data)=>res.send(data))
-    .catch(e=>console.log(e))
+    .catch(e=>console.log(e))*/
 }
 export async function getUser(req,res){
     const id = req.params.id
