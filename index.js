@@ -3,6 +3,8 @@ import { connectDB } from './config/db.js'
 import { userRouter } from './app/routes/user.js'
 import bodyParser from 'body-parser'
 
+connectDB()
+
 const app = express()
 const port = process.env.PORT || 3000
 
@@ -22,9 +24,15 @@ app.use(
 app.get('/',(req,res)=>{
     res.send({data:'Hello World!'})
 })
+app.get('/connection',(req,res)=>{
+    try{
+        connectDB()
+        res.send({data:"connected"})
+    }catch(e){
+        res.status(400).send({error:e.message})
+    }
+})
 
 app.use(userRouter)
-
-connectDB()
  
 app.listen(port,()=>console.log('server connected')) 
