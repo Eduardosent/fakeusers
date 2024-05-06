@@ -24,9 +24,9 @@ app.use(
 app.get('/',(req,res)=>{
     res.send({data:'Hello World!'})
 })
-app.get('/connection',(req,res)=>{
+app.get('/connection',async(req,res)=>{
     try{
-        connectDB()
+        await connectDB()
         res.send({data:"connected"})
     }catch(e){
         res.status(400).send({error:e.message})
