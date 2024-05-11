@@ -2,11 +2,15 @@ import express from 'express'
 import { connectDB } from './config/db.js'
 import { userRouter } from './app/routes/user.js'
 import bodyParser from 'body-parser'
+import { uploadfileright} from './app/controllers/upload.js'
+import cors from 'cors'
 
 connectDB()
 
 const app = express()
 const port = process.env.PORT || 3000
+
+app.use(cors())
 
 //for parsin json
 app.use(
@@ -24,16 +28,9 @@ app.use(
 app.get('/',(req,res)=>{
     res.send({data:'Hello World!'})
 })
-app.get('/connection',async(req,res)=>{
-    try{
-        if(connectDB()){
-            res.send({data:"connected"})
-        }
-    }catch(e){
-        res.status(400).send({error:e.message})
-    }
-})
 
 app.use(userRouter)
+
+app.post('/upload',uploadfileright)
  
 app.listen(port,()=>console.log('server connected')) 
